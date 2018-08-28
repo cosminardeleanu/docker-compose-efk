@@ -17,12 +17,19 @@ services:
             max-file: "5"
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:5.3.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    ports:
+      - "9200:9200"
+      - "9200:9200/udp"
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:5.3.0
+    image: docker.elastic.co/kibana/kibana:6.4.0
+#    volumes:
+#      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
     links:
       - "elasticsearch"
     ports:
       - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
 
